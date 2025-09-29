@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/vpss_logo.jpg" alt="vpss-logo" height="300" />
+  <img src="images/vpss_logo.jpg" alt="vpss-logo" height="251" />
 </p>
 
 ## Introduction
