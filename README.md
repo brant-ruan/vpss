@@ -9,7 +9,7 @@
 
 The workflow of VPSS is shown as below:
 
-![overview](images/overview.jpg)
+<img src="images/overview.jpg" alt="workflow" width="70%" />
 
 You can refer to [the paper](https://arxiv.org/pdf/2506.01342) for more details.
 
