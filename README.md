@@ -9,6 +9,10 @@
 
 The workflow of VPSS is shown as below:
 
+![overview](images/overview.jpg)
+
+You can refer to [the paper](https://arxiv.org/pdf/2506.01342) for more details.
+
 ## Citation
 
 If you use VPSS, please cite the [following paper](https://arxiv.org/pdf/2506.01342):
