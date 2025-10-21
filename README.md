@@ -4,7 +4,11 @@
 
 ## Introduction (Under Construction)
 
-Stay tuned :P
+The primary motivation of this project is derived from the [CVSS 4.0 FAQ](https://www.first.org/cvss/v4.0/faq):
+
+> Is there a prescribed way to use CVSS Base and Environmental metrics to score a vulnerability along a long supply chain?  
+> 
+> Answer - No.
 
 ## Installation
 
