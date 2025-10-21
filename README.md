@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/vpss_logo.jpg" alt="vpss-logo" height="251" />
+  <img src="images/vpss_logo.jpg" alt="vpss-logo" height="210" />
 </p>
 
 ## Introduction (Under Construction)
@@ -211,6 +211,16 @@ sudo docker exec -it neo4j_vpa cypher-shell -u neo4j -p $PASSWORD
 Now the dependency graph is stored in the Neo4j database for later use.
 
 #### Notes on Incremental Updates
+
+There is no need to build the dependency graph from scratch every time. Instead, you can perform incremental updates by only downloading and parsing the newly added or updated artifacts since the last update.
+
+For the update of the MCR index, you can refer to the following materials and program via the [Maven Indexer API](https://maven.apache.org/maven-indexer/indexer-core/apidocs/):
+
+- [Maven Indexer Documentation](https://maven.apache.org/repository/central-index.html)
+- [Nexus Indexer 2.0: Incremental downloading](https://www.sonatype.com/blog/2009/05/nexus-indexer-20-incremental-downloading)
+- [indexer-example-basic](https://maven.apache.org/maven-indexer-archives/maven-indexer-7.1.6/maven-indexer-examples/indexer-examples-basic/xref/org/apache/maven/index/examples/BasicUsageExample.html)
+
+For the update of the dependency graph, you can only download and parse the `pom.xml` files of the newly added or updated artifacts, and then import the new dependencies into the Neo4j database.
 
 ### Step 2: Vulnerable Function Identification
 
