@@ -46,7 +46,7 @@ mvn -v
 # Default locale: en_US, platform encoding: UTF-8
 # OS name: "linux", version: "6.8.0-56-generic", arch: "amd64", family: "unix"
 ```
-</devtails>
+</details>
 
 ## Workflow
 
