@@ -1,0 +1,8 @@
+requests
+networkx
+neo4j
+openai
+packaging
+bs4
+filelock
+matplotlib

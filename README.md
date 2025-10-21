@@ -27,17 +27,35 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+We also need to install Java and Maven for this project. Please ensure that `java` and `mvn` commands are available in your PATH. The version of Java and Maven in our experiments are shown below:
+
+```bash
+java -version
+# openjdk version "17.0.14" 2025-01-21
+# OpenJDK Runtime Environment (build 17.0.14+7-Ubuntu-124.04)
+# OpenJDK 64-Bit Server VM (build 17.0.14+7-Ubuntu-124.04, mixed mode, sharing)
+
+mvn -v
+# Apache Maven 3.8.7
+# Maven home: /usr/share/maven
+# Java version: 17.0.14, vendor: Ubuntu, runtime: /usr/lib/jvm/java-17-openjdk-amd64
+# Default locale: en_US, platform encoding: UTF-8
+# OS name: "linux", version: "6.8.0-56-generic", arch: "amd64", family: "unix"
+```
+
 ## Workflow
 
 The workflow of VPSS is shown as below:
 
 <img src="images/overview.jpg" alt="workflow" width="70%" />
 
-You can refer to [the paper](https://arxiv.org/pdf/2506.01342) for more details.
+Please refer to [the paper](https://arxiv.org/pdf/2506.01342) for more details.
 
 ### Step 1: Dependency Graph Construction
 
-For the first time, you need to download the latest [Maven Central Repository (MCR) index](https://repo1.maven.org/maven2/.index/) data:
+#### Step 1.1: MCR Index Preparation
+
+For the first time, we need to download the latest [Maven Central Repository (MCR) index](https://repo1.maven.org/maven2/.index/) data:
 
 ```bash
 # within the workspace
@@ -46,11 +64,60 @@ wget https://repo1.maven.org/maven2/.index/nexus-maven-repository-index.gz
 java -jar indexer-cli-5.1.1.jar --unpack nexus-maven-repository-index.gz --destination central-lucene-index --type full
 ```
 
-After that, you will have a `central-lucene-index` folder under `workdir/mcr/`, which contains the MCR index data.
+After that, we will have a `central-lucene-index` folder under `workdir/mcr/`, which contains the MCR index data.
+
+#### Step 1.2: Artifact List Extraction
+
+Now, run the `maven-index-parser` to extract the artifact list from the MCR index:
+
+```bash
+# within the workspace
+cd vpss/package-analysis/maven-index-parser
+# build the project
+mvn -Dmaven.compiler.source=17 -Dmaven.compiler.target=17 clean package
+# run the parser
+mvn exec:java -Dexec.mainClass="com.vpa.App"
+```
+
+After that, we will get an `artifact-list.csv` file under `workdir/mcr/` with the following format:
+
+```csv
+GroupId,ArtifactId,Version,Timestamp
+org.sonatype.nexus.plugins.ldap,nexus-ldap-plugin-it,1.9.2.1,1310694579000
+org.ow2.util,util-plan-monitor-api,1.0.16,1239010118000
+org.ow2.util,util-geolocation-ear,1.0.28,1299604696000
+org.seleniumhq.selenium,selenium-ie-driver,2.4.0,1313612545000
+org.ow2.jonas.assemblies,binaries,5.2.0-M4,1297362732000
+...
+```
+
+Then, convert the CSV file into JSON format for later use:
+
+```bash
+# within the workspace
+cd vpss/package-analysis
+python scripts/gav_csv_to_json.py ../../workdir/mcr/artifacts-list.csv ../../workdir/mcr/artifacts-list.json
+```
+
+#### Step 1.3: POM File Downloading
+
+Now, we can download the `pom.xml` files for all artifacts in MCR by running the following command:
+
+```bash
+# within the workspace
+cd vpss/package-analysis
+python scripts/download_poms.py ../../workdir/mcr/artifacts-list.json
+```
+
+Note that this step may take a **very very long time** if only one thread is used. Hence, the command above is only for demonstration purposes. In practice, you need to split the `artifacts-list.json` file into multiple smaller files and run multiple instances of `download_poms.py` in parallel to speed up the download process.
+
+#### Step 1.4: POM File Parsing
 
 
 
-**Notes on Incremental Updates:** 
+#### Step 1.5: Dependency Graph Generation
+
+#### Notes on Incremental Updates
 
 ### Step 2: Vulnerable Function Identification
 
