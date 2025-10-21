@@ -30,8 +30,7 @@ pip install -r requirements.txt
 We also need to install Java and Maven for this project. Please ensure that `java` and `mvn` commands are available in your PATH. The version of Java and Maven in our experiments are shown below:
 
 <details>
-
-<summary>Version Information</summary>
+<summary>Environment Details</summary>
 
 ```bash
 java -version
@@ -90,6 +89,9 @@ mvn exec:java -Dexec.mainClass="com.vpa.App"
 
 After that, we will get an `artifact-list.csv` file under `workdir/mcr/` with the following format:
 
+<details>
+<summary>Example of artifact-list.csv</summary>
+
 ```csv
 GroupId,ArtifactId,Version,Timestamp
 org.sonatype.nexus.plugins.ldap,nexus-ldap-plugin-it,1.9.2.1,1310694579000
@@ -99,6 +101,8 @@ org.seleniumhq.selenium,selenium-ie-driver,2.4.0,1313612545000
 org.ow2.jonas.assemblies,binaries,5.2.0-M4,1297362732000
 ...
 ```
+
+</details>
 
 Then, convert the CSV file into JSON format for later use:
 
@@ -137,6 +141,9 @@ After that, we will get a `deps/` folder under `workdir/kb/`, which contains the
 
 An example JSON file (`workdir/kb/deps/com.agifac.maf.packaging/maf-desktop/15.0.0/dependencies.json`) is shown below:
 
+<details>
+<summary>Example of dependencies.json</summary>
+
 ```json
 {
   "com.agifac.maf.packaging:maf-desktop:15.0.0": [
@@ -145,6 +152,8 @@ An example JSON file (`workdir/kb/deps/com.agifac.maf.packaging/maf-desktop/15.0
   ]
 }
 ```
+
+</details>
 
 #### Step 1.5: Dependency Graph Generation
 
@@ -161,6 +170,9 @@ After that, we will get a `ga_dependency_graph.graphml` file under `workdir/`, w
 #### Step 1.6: Storage of Dependency Graph
 
 To ensure efficient access to the dependency graph in later steps, we spawn a Neo4j database container and import the dependency graph into it. We provide the necessary commands for this process below, while you may need to adjust certain parameters based on your specific environment.
+
+<details>
+<summary>Neo4j Container Setup and Graph Import</summary>
 
 ```bash
 # within the workspace (assume $WORKSPACE is the absolute path of the workspace)
@@ -193,6 +205,8 @@ sudo docker exec -it neo4j_vpa cypher-shell -u neo4j -p $PASSWORD
 # then run the following command within the cypher-shell
 # neo4j@neo4j> CALL apoc.import.graphml("import/ga_dependency_graph.graphml", {readLabels: true});
 ```
+
+</details>
 
 Now the dependency graph is stored in the Neo4j database for later use.
 
