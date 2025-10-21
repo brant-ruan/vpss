@@ -32,7 +32,6 @@ public class EffectivePomGenerator {
                          try {
                              File pomFile = pomPath.toFile();
                              String gav = parsePom(pomFile, pomsBaseDir, depsBaseDir, logFilePath);
-                             // Uncomment if you want to log processed POMs
                          } catch (Exception e) {
                              System.err.println("Failed to process POM: " + pomPath);
                              // Uncomment to log exceptions

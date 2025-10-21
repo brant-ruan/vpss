@@ -45,11 +45,15 @@ mvn -v
 
 ## Workflow
 
+### Overview
+
 The workflow of VPSS is shown as below:
 
 <img src="images/overview.jpg" alt="workflow" width="70%" />
 
 Please refer to [the paper](https://arxiv.org/pdf/2506.01342) for more details.
+
+Note that some steps in the workflow may take a very long time to finish. We recommend using tools like `tmux` or `screen` to avoid unexpected interruptions.
 
 ### Step 1: Dependency Graph Construction
 
@@ -101,7 +105,7 @@ python scripts/gav_csv_to_json.py ../../workdir/mcr/artifacts-list.csv ../../wor
 
 #### Step 1.3: POM File Downloading
 
-Now, we can download the `pom.xml` files for all artifacts in MCR by running the following command:
+Now, we can download the `pom.xml` files for all artifacts in MCR by running the following commands:
 
 ```bash
 # within the workspace
@@ -113,9 +117,79 @@ Note that this step may take a **very very long time** if only one thread is use
 
 #### Step 1.4: POM File Parsing
 
+Now, we can parse all downloaded `pom.xml` files to generate the dependency JSON files by running the following commands:
 
+```bash
+# within the workspace
+cd vpss/package-analysis/maven-dep-parser
+# build the project
+mvn -Dmaven.compiler.source=17 -Dmaven.compiler.target=17 clean package
+# run the parser
+mvn exec:java -Dexec.mainClass="com.vpa.EffectivePomGenerator"
+```
+
+After that, we will get a `deps/` folder under `workdir/kb/`, which contains the dependency JSON files. The path of each file follows the format: `workdir/kb/deps/{groupId}/{artifactId}/{version}/dependencies.json`.
+
+An example JSON file (`workdir/kb/deps/com.agifac.maf.packaging/maf-desktop/15.0.0/dependencies.json`) is shown below:
+
+```json
+{
+  "com.agifac.maf.packaging:maf-desktop:15.0.0": [
+    "com.agifac.maf.desktop:maf-desktop-app:15.0.0",
+    "com.agifac.lib:maf-defaultplugins-extension:15.0.0"
+  ]
+}
+```
 
 #### Step 1.5: Dependency Graph Generation
+
+Now, we can generate the dependency graph by running the following commands:
+
+```bash
+# within the workspace
+cd vpss/package-analysis
+python scripts/build_dependency_graph.py
+```
+
+After that, we will get a `ga_dependency_graph.graphml` file under `workdir/`, which contains the GA-level dependency graph of MCR artifacts.
+
+#### Step 1.6: Storage of Dependency Graph
+
+To ensure efficient access to the dependency graph in later steps, we spawn a Neo4j database container and import the dependency graph into it. We provide the necessary commands for this process below, while you may need to adjust certain parameters based on your specific environment.
+
+```bash
+# within the workspace (assume $WORKSPACE is the absolute path of the workspace)
+mkdir -p $WORKSPACE/neo4j/data
+mkdir -p $WORKSPACE/neo4j/logs
+mkdir -p $WORKSPACE/neo4j/conf
+mkdir -p $WORKSPACE/neo4j/import
+mkdir -p $WORKSPACE/neo4j/plugins
+
+PASSWORD="your_password_here"  # please change this to a secure password
+
+sudo docker run -d \
+    --name neo4j_vpa \
+    -p 7477:7474 -p 7689:7687 \
+    -e NEO4J_AUTH=neo4j/$PASSWORD \
+    -v $WORKSPACE/neo4j/data:/data \
+    -v $WORKSPACE/neo4j/logs:/logs \
+    -v $WORKSPACE/neo4j/conf:/conf \
+    -v $WORKSPACE/neo4j/import:/var/lib/neo4j/import \
+    -v $WORKSPACE/neo4j/plugins:/plugins \
+    -e NEO4J_apoc_export_file_enabled=true \
+    -e NEO4J_apoc_import_file_enabled=true \
+    -e NEO4J_apoc_import_file_use__neo4j__config=true \
+    -e NEO4J_PLUGINS=\[\"apoc\"\] \
+    neo4j:latest
+
+# import the networkx-based graph with the APOC plugin
+sudo cp workdir/ga_dependency_graph.graphml $WORKSPACE/neo4j/import
+sudo docker exec -it neo4j_vpa cypher-shell -u neo4j -p $PASSWORD
+# then run the following command within the cypher-shell
+# neo4j@neo4j> CALL apoc.import.graphml("import/ga_dependency_graph.graphml", {readLabels: true});
+```
+
+Now the dependency graph is stored in the Neo4j database for later use.
 
 #### Notes on Incremental Updates
 
