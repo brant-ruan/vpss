@@ -2,7 +2,7 @@
   <img src="images/vpss_logo.jpg" alt="vpss-logo" height="210" />
 </p>
 
-## Introduction (Under Construction)
+## 🏹 Introduction (Under Construction)
 
 The primary motivation of this project is derived from the [CVSS 4.0 FAQ](https://www.first.org/cvss/v4.0/faq):
 
@@ -10,7 +10,8 @@ The primary motivation of this project is derived from the [CVSS 4.0 FAQ](https:
 > 
 > Answer - No.
 
-## Installation
+
+## 🏗️ Environment Initialization
 
 Please prepare a clean workspace and execute the following commands:
 
@@ -51,9 +52,9 @@ mvn -v
 ```
 </details>
 
-## Workflow
+## 🛠️ Workflow
 
-### Overview
+### 🖼️ Overview
 
 The workflow of VPSS is shown as below:
 
@@ -63,7 +64,7 @@ Please refer to [the paper](https://arxiv.org/pdf/2506.01342) for more details.
 
 Note that some steps in the workflow may take a very long time to finish. We recommend using tools like `tmux` or `screen` to avoid unexpected interruptions.
 
-### Step 1: Dependency Graph Construction
+### 🗺️ Step 1: Dependency Graph Construction
 
 #### Step 1.1: MCR Index Preparation
 
@@ -226,10 +227,10 @@ For the update of the MCR index, you can refer to the following materials and pr
 
 For the update of the dependency graph, you can only download and parse the `pom.xml` files of the newly added or updated artifacts, and then import the new dependencies into the Neo4j database.
 
-### Step 2: Vulnerable Function Identification
+### 🔎 Step 2: Vulnerable Function Identification
 
 
-### Step 3: Vulnerability Propagation Analysis
+### 🔬 Step 3: Vulnerability Propagation Analysis
 
 To perform vulnerability propagation analysis, run the following command ()
 
@@ -241,10 +242,10 @@ Notes:
 
 - We used Soot to perform static analysis and build the call graphs for experiments in this paper. Although we also tested with Tai-e, it is an experimental option and may require more effort to work properly.
 
-### Step 4: VPSS Calculation
+### 🔮 Step 4: VPSS Calculation
 
 
-## Citation
+## 📝 Citation
 
 If you use VPSS, please cite the [following paper](https://arxiv.org/pdf/2506.01342):
 
