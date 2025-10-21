@@ -29,6 +29,10 @@ pip install -r requirements.txt
 
 We also need to install Java and Maven for this project. Please ensure that `java` and `mvn` commands are available in your PATH. The version of Java and Maven in our experiments are shown below:
 
+<details>
+
+<summary>Version Information</summary>
+
 ```bash
 java -version
 # openjdk version "17.0.14" 2025-01-21
@@ -42,6 +46,7 @@ mvn -v
 # Default locale: en_US, platform encoding: UTF-8
 # OS name: "linux", version: "6.8.0-56-generic", arch: "amd64", family: "unix"
 ```
+</devtails>
 
 ## Workflow
 
