@@ -229,6 +229,11 @@ For the update of the dependency graph, you can only download and parse the `pom
 
 ### 🔎 Step 2: Vulnerable Function Identification
 
+Our dataset is based on the [dataset](https://github.com/CGCL-codes/MavenEcoSysResearch) released by [Wu et al. (ICSE'23)](https://ieeexplore.ieee.org/document/10172868). We select 100 vulnerabilities from their dataset, and conduct vulnerable function identification filtering as described in our paper.
+
+The prompt used for LLM-assisted VF filtering is located at `vf-analysis/prompt.txt`. The patches used for this process is located at `dataset/patches/`.
+
+The final dataset for experiments in our paper is located at `dataset/meta/`.
 
 ### 🔬 Step 3: Vulnerability Propagation Analysis
 

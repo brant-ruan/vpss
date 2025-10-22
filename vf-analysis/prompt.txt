@@ -1,0 +1,69 @@
+## Task Description
+Your goal is to analyze the given patch details, identify truly affected functions, and provide structured output.
+
+## Input Format
+- **Patch**: Code fix patch, already filtered to include only modified, added, or deleted functions.
+
+## Task Steps
+1. **Identify All Affected Functions**:
+- Extract all functions that are modified, newly added, or deleted in the patch.
+
+2. **Filter Out Unrelated Functions** (if all changes in the function match exactly one rule below):
+- `whitespace/comment`: Only whitespace changes, comment adjustments, method reordering, or blank lines.
+- `cosmetic`: Only AST-equivalent renaming (e.g., variables, function names, class members, parameters), no logic change.
+- `logging`: Only debug/log statements (e.g., System.out.println, log.warn) or exception message changes.
+- `getter/setter`: Pure getters/setters: only `this.X = x`, `return x`, or `return this.X`.
+- `test`: Functions named with 'test' or located in test packages.
+
+3. **Apply Special Rules**:
+- If **all** identified functions are filtered out, keep **all** and assign filter reason `"fallback_keep"`.
+- If **only 2 functions** are identified in total, keep **at least one** as vulnerable (e.g., the one with most logical changes).
+
+## Output Format (strict JSON only)
+{
+  "cve": "CVE-XXXX-YYYY",
+  "vuln_function": [
+    "full.package.Class:functionName"
+  ],
+  "filtered_function": {
+    "full.package.Class:functionName": "reason_tag"
+  }
+}
+
+## Function Naming
+- Use full format: `<package>.<Class>:<methodName>`
+- Inner classes use `$`, e.g., `com.example.Outer$Inner:foo`
+- If no package is known, use `default.ClassName:method`
+
+## Reason Tags (use these only)
+- "whitespace/comment"
+- "cosmetic"
+- "logging"
+- "getter/setter"
+- "test"
+- "fallback_keep"
+
+## Output Constraints
+- Output valid JSON only (no extra text)
+- Follow field order: `cve`, `vuln_function`, `filtered_function`
+
+## Example
+
+Patch:
+-@@ public void setX(int x) { this.x = x; }
++@@ public void setX(int x) { this.x = x; log.debug("x set"); }
+@@ public void doWork() {
+-   if (flag) compute();
++   if (flag) computeFast();
+}
+
+Output:
+{
+    "cve": "CVE-2025-1234",
+    "vuln_function": [
+      "com.example.Worker:doWork"
+    ],
+    "filtered_function": {
+      "com.example.Worker:setX": "logging"
+    }
+}
