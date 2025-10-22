@@ -1,0 +1,58 @@
+From 52b765f61de3df445e9b2260239fae39786af34e Mon Sep 17 00:00:00 2001
+From: wuwen <wuwen.55@gmail.com>
+Date: Thu, 19 Jan 2017 20:07:26 +0800
+Subject: [PATCH] bug fixed for issue 1005.
+
+---
+ .../fastjson/serializer/ObjectArrayCodec.java   |  2 +-
+ .../com/alibaba/json/bvt/bug/Issue1005.java     | 17 ++++++++++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/src/main/java/com/alibaba/fastjson/serializer/ObjectArrayCodec.java b/src/main/java/com/alibaba/fastjson/serializer/ObjectArrayCodec.java
+index 9b8c0e3c17..77f2d63d98 100755
+--- a/src/main/java/com/alibaba/fastjson/serializer/ObjectArrayCodec.java
++++ b/src/main/java/com/alibaba/fastjson/serializer/ObjectArrayCodec.java
+@@ -174,7 +174,7 @@ public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
+             componentType = componentClass = clazz.getComponentType();
+         }
+         JSONArray array = new JSONArray();
+-        parser.parseArray(componentClass, array, fieldName);
++        parser.parseArray(componentType, array, fieldName);
+ 
+         return (T) toObjectArray(parser, componentClass, array);
+     }
+diff --git a/src/test/java/com/alibaba/json/bvt/bug/Issue1005.java b/src/test/java/com/alibaba/json/bvt/bug/Issue1005.java
+index 2ceb034b87..aec293d74d 100644
+--- a/src/test/java/com/alibaba/json/bvt/bug/Issue1005.java
++++ b/src/test/java/com/alibaba/json/bvt/bug/Issue1005.java
+@@ -10,7 +10,18 @@
+  */
+ public class Issue1005 extends TestCase {
+     public void test_for_issue() throws Exception {
+-        Model model = JSON.parseObject("{\"values\":[1,2,3]}", Model.class);
++        Model model = JSON.parseObject("{\"values\":[[1,2,3]]}", Model.class);
++
++        assertNotNull(model.values);
++        assertEquals(3, model.values[0].size());
++        assertEquals(Byte.class, model.values[0].get(0).getClass());
++        assertEquals(Byte.class, model.values[0].get(1).getClass());
++        assertEquals(Byte.class, model.values[0].get(2).getClass());
++    }
++
++    public void test_for_List() throws Exception {
++        Model2 model = JSON.parseObject("{\"values\":[1,2,3]}", Model2.class);
++
+         assertNotNull(model.values);
+         assertEquals(3, model.values.size());
+         assertEquals(Byte.class, model.values.get(0).getClass());
+@@ -19,6 +30,10 @@ public void test_for_issue() throws Exception {
+     }
+ 
+     public static class Model {
++        public List<Byte>[] values;
++    }
++
++    public static class Model2 {
+         public List<Byte> values;
+     }
+ }
