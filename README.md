@@ -237,6 +237,16 @@ The final dataset for experiments in our paper is located at `dataset/meta/`.
 
 ### 🔬 Step 3: Vulnerability Propagation Analysis
 
+Before the propagation analysis, we need to build the callgraph generation tool:
+
+```bash
+# within the workspace
+cd vpss/prog-analysis
+mvn -Dmaven.compiler.source=17 -Dmaven.compiler.target=17 clean package
+```
+
+After that, the `prog-analysis-1.0.jar` file will be generated under the `vpss/prog-analysis/target/` folder.
+
 To perform vulnerability propagation analysis, run the following command ()
 
 ```bash
