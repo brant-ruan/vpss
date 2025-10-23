@@ -14,7 +14,7 @@ CALLGRAPH_DIR = CALLGRAPH_DIR_SOOT
 
 UPSTREAM_GA_FILE = "up"
 CVE_DATASET_DIR = "dataset/data/meta"
-# ORIGINAL_DATASET_DIR = "dataset"
+ORIGINAL_DATASET_DIR = "dataset"  # deprecated
 GLOBAL_DEPS_DIR = f"{WORKDIR}/kb/deps"
 JAR_DIR = f"{WORKDIR}/jars"
 
