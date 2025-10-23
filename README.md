@@ -2,14 +2,15 @@
   <img src="images/vpss_logo.jpg" alt="vpss-logo" height="210" />
 </p>
 
-## 🏹 Introduction (Under Construction)
+## 🏹 Introduction
 
-The primary motivation of this project is derived from the [CVSS 4.0 FAQ](https://www.first.org/cvss/v4.0/faq):
+Identifying the impact scope and scale is critical for software supply chain vulnerability assessment. However, existing studies face substantial limitations. First, prior studies either work at coarse package-level granularity—producing many false positives—or fail to accomplish whole-ecosystem vulnerability propagation analysis. Second, although vulnerability assessment indicators like CVSS characterize individual vulnerabilities, no metric exists to specifically quantify the dynamic impact of vulnerability propagation across software supply chains.
 
-> Is there a prescribed way to use CVSS Base and Environmental metrics to score a vulnerability along a long supply chain?  
-> 
-> Answer - No.
+To address these limitations and enable accurate and comprehensive vulnerability impact assessment, we propose a novel approach: (i) a hierarchical worklist-based algorithm for whole-ecosystem and call-graph-level vulnerability propagation analysis and (ii) the Vulnerability Propagation Scoring System (VPSS), a dynamic metric to quantify the scope and evolution of vulnerability impacts in software supply chains.
 
+We implement a prototype of our approach in the Java Maven ecosystem and evaluate it on 100 real-world vulnerabilities. Experimental results demonstrate that our approach enables effective ecosystem-wide vulnerability propagation analysis, and provides a practical, quantitative measure of vulnerability impact through VPSS.
+
+**In this repository, we release the implementation of our prototype and the experimental dataset to foster future research.**
 
 ## 🏗️ Environment Initialization
 
