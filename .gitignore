@@ -24,3 +24,7 @@ venv/
 vendor/
 bin/
 workdir/
+sootOutput/
+output/
+target/
+java-benchmarks/
