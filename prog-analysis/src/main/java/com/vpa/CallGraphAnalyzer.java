@@ -73,7 +73,6 @@ public class CallGraphAnalyzer {
     }
 
     public static void saveCallGraphWithVisibilityToJson(CallGraph callGraph, String filePath, String packagePrefixFilePath) {
-        // 保证前缀已经加载
         loadPackagePrefixes(packagePrefixFilePath);
 
         Map<String, JsonObject> nodesMap = new HashMap<>();
@@ -149,7 +148,7 @@ public class CallGraphAnalyzer {
     }
 
     private static void loadPackagePrefixes(String packagePrefixFilePath) {
-        if (!packagePrefixes.isEmpty()) return;  // 已加载则跳过
+        if (!packagePrefixes.isEmpty()) return;
 
         if (packagePrefixFilePath != null && !packagePrefixFilePath.isEmpty()) {
             try (Scanner scanner = new Scanner(new java.io.File(packagePrefixFilePath))) {
