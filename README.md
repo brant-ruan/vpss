@@ -250,11 +250,17 @@ mvn -Dmaven.compiler.source=17 -Dmaven.compiler.target=17 clean package
 
 After that, the `prog-analysis-1.0.jar` file will be generated under the `vpss/prog-analysis/target/` folder.
 
-To perform vulnerability propagation analysis, run the following command ()
+To perform vulnerability propagation analysis, run the following commands (e.g., for CVE-2016-5393):
 
 ```bash
+# within the workspace
+cd vpss
 python ./vpa-analyzer.py --cve CVE-2016-5393 --proc-num-deps 16 --proc-num-cg 16
 ```
+
+It may take a long time to complete the propagation analysis depending on the number of affected artifacts and their dependencies.
+
+The analysis results will be stored under the `{WORKDIR}/{CG_GENERATOR}_analysis/{args.cve}` folder, e.g., `workdir/soot_analysis/CVE-2016-5393/`.
 
 Notes:
 
