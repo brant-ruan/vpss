@@ -1,0 +1,29 @@
+NEO4J_URI = "bolt://localhost:7689"
+NEO4J_USER = "neo4j"
+NEO4J_PASSWORD = "your_password_here"
+
+WORKDIR = "../workdir"
+
+CG_GENERATOR_SOOT = "soot"
+CG_GENERATOR_TAIE = "tai-e"
+CG_GENERATOR = CG_GENERATOR_SOOT
+
+CALLGRAPH_DIR_SOOT = f"{WORKDIR}/kb/cg_soot"
+CALLGRAPH_DIR_TAIE = f"{WORKDIR}/kb/cg_taie"
+CALLGRAPH_DIR = CALLGRAPH_DIR_SOOT
+
+UPSTREAM_GA_FILE = "up"
+CVE_DATASET_DIR = "dataset/data/meta"
+# ORIGINAL_DATASET_DIR = "dataset"
+GLOBAL_DEPS_DIR = f"{WORKDIR}/kb/deps"
+JAR_DIR = f"{WORKDIR}/jars"
+
+GAV_PREFIX_DB = f"{WORKDIR}/kb/gav_packages.db"
+
+ANNOTATIONS_DIR = f"annotations"
+
+
+STATUS_NETWORK_ERROR = "NETWORK_ERROR"
+JDEPS_VERBOSE_LEVEL = "class"
+# JDEPS_VERBOSE_LEVEL = "package"
+CALLGRAPH_TIMEOUT = 60 * 15 # 15 minutes

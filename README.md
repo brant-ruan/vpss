@@ -32,6 +32,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+Besides, ensure `unzip`, `jar`, and `jdeps` commands are available in your PATH.
+
 We also need to install Java and Maven for this project. Please ensure that `java` and `mvn` commands are available in your PATH. The version of Java and Maven in our experiments are shown below:
 
 <details>
@@ -188,6 +190,7 @@ mkdir -p $WORKSPACE/neo4j/import
 mkdir -p $WORKSPACE/neo4j/plugins
 
 PASSWORD="your_password_here"  # please change this to a secure password
+# Also, remember to specify the same password value for the NEO4J_PASSWORD variable in core/config.py
 
 sudo docker run -d \
     --name neo4j_vpa \
