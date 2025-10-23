@@ -268,6 +268,15 @@ Notes:
 
 ### 🔮 Step 4: VPSS Calculation
 
+After the propagation analysis is completed, we can calculate the VPSS scores by parsing the analysis results. Run the following commands to calculate the time-aware VPSS scores for vulnerabilities in our dataset:
+
+```bash
+# within the workspace
+cd vpss/vpss-calculation
+python calculate_vpss.py
+```
+
+Specifically, the `vpss/vpss-calculation/vpa_results/` folder contains the analysis results of all vulnerabilities in our dataset, and the VPSS scores will be stored in the `vpss/vpss-calculation/vpss_stats/` folder.
 
 ## 📝 Citation
 
