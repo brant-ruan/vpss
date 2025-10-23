@@ -1,0 +1,43 @@
+[
+    {
+      "owner": "java/lang/Class",
+      "name": "forName",
+      "descriptor": "(Ljava/lang/String;)Ljava/lang/Class;"
+    },
+    {
+      "owner": "java/lang/ClassLoader",
+      "name": "loadClass",
+      "descriptor": "(Ljava/lang/String;)Ljava/lang/Class;"
+    },
+    {
+      "owner": "java/lang/Class",
+      "name": "newInstance",
+      "descriptor": "()Ljava/lang/Object;"
+    },
+    {
+      "owner": "java/lang/Class",
+      "name": "getMethod",
+      "descriptor": "(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;"
+    },
+    {
+      "owner": "java/lang/Class",
+      "name": "getDeclaredMethod",
+      "descriptor": "(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;"
+    },
+    {
+      "owner": "java/lang/reflect/Constructor",
+      "name": "newInstance",
+      "descriptor": "([Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "owner": "java/lang/reflect/Method",
+      "name": "invoke",
+      "descriptor": "(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;"
+    },
+    {
+      "owner": "java/lang/reflect/Array",
+      "name": "newInstance",
+      "descriptor": "(Ljava/lang/Class;I)Ljava/lang/Object;"
+    }
+  ]
+  

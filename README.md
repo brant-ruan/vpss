@@ -264,7 +264,7 @@ The analysis results will be stored under the `{WORKDIR}/{CG_GENERATOR}_analysis
 
 Notes:
 
-- We used Soot to perform static analysis and build the call graphs for experiments in this paper. Although we also tested with Tai-e, it is an experimental option and may require more effort to work properly.
+- We use Soot to perform static analysis and build the call graphs for experiments in this paper. Although we also tested with Tai-e, it is an experimental option and may require more effort to work properly.
 
 ### 🔮 Step 4: VPSS Calculation
 
