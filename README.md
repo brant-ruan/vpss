@@ -288,6 +288,7 @@ If you use VPSS, please cite the [following paper](https://arxiv.org/pdf/2506.01
   title={Propagation-Based Vulnerability Impact Assessment for Software Supply Chains},
   author={Ruan, Bonan and Lin, Zhiwei and Liu, Jiahao and Zhang, Chuqi and Ji, Kaihang and Liang, Zhenkai},
   booktitle={Proceedings of the 40th IEEE/ACM International Conference on Automated Software Engineering},
+  pages={65--77},
   year={2025}
 }
 ```
